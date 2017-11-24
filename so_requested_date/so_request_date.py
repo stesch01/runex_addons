@@ -6,4 +6,4 @@ from openerp import models, fields
 class SoRequestedDateSaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    resuested_date_2 = fields.Datetime(related='requested_date')
+    exworks_date = fields.Date(string='Ex Works Date')

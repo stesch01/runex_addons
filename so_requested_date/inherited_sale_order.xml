@@ -8,8 +8,19 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group/group/field[@name='client_order_ref']" position="after">
-                    <field name="requested_date" on_change="onchange_requested_date(requested_date, commitment_date)"/>
+                    <field name="exworks_date"/>
                 </xpath>
+            </field>
+        </record>
+
+        <record id="so_requested_date_view_order_tree_inherited" model="ir.ui.view">
+            <field name="name">so.requested.date.view.order.tree.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="exworks_date"/>
+                </field>
             </field>
         </record>
 

@@ -2,14 +2,15 @@
 <openerp>
     <data>
 
-        <record id="so_resquested_date_view_sale_orderfor_inherited" model="ir.ui.view">
-            <field name="name">so.resquested.date.view.sale.orderfor.inherited</field>
+        <record id="so_requested_date_view_quotation_tree_date_inherited" model="ir.ui.view">
+            <field name="name">so.requested.date.view.quotation.tree.date.inherited</field>
             <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale_order_dates.view_sale_orderfor"/>
+            <field name="inherit_id" ref="sale_order_dates.view_quotation_tree_date"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='requested_date']" position="replace">
-                    <field name="resuested_date_2"/>
-                </xpath>
+                <field name="requested_date" position="replace"/>
+                <field name="commitment_date" position="replace">
+                    <field name="exworks_date"/>
+                </field>
             </field>
         </record>
 
