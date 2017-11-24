@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="so_ready_to_ship_view_order_line_tree_inherited" model="ir.ui.view">
+            <field name="name">so.ready.to.ship.view.order.line.tree.inherited</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="attributes">
+                    <attribute name="widget">color_on_condition</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="so_ready_to_ship_view_order_tree_inherited" model="ir.ui.view">
+            <field name="name">so.ready.to.ship.view.order.tree.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="have_qty" invisible="True"/>
+                </field>
+                 <field name="name" position="attributes">
+                    <attribute name="widget">color_on_condition_boolean</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
