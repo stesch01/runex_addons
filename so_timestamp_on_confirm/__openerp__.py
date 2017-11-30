@@ -1,25 +1,36 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Odoo, Open Source Management Solution
+#    Copyright (C) 2016-TODAY Linserv Aktiebolag, Sweden (<http://www.linserv.se>).
+#
+##############################################################################
 {
-    'name': "so_timestamp_on_confirm",
-
-    'summary': """
-        so_timestamp_on_confirm""",
-
-    'description': """
-        so_timestamp_on_confirm
-    """,
-
-    'author': "UAB Pralo",
-    'website': "http://www.pralo.eu",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    'depends': ['base', 'sale'],
-
-    'data': [
+    "name": "Time Stamp On Sale Order Confirm",
+    "version": "1.0",
+    "author": "Linserv AB",
+    "category": "Sales Management",
+    "summary": "Time Stamp On Sale Order Confirm",
+    "website": "www.linserv.se",
+    "contributors": [
+        'Gediminas Venclova <gediminasv@live.com>'
     ],
+    "license": "",
+    "depends": [
+        'base', 'sale'
+    ],
+    'description': """
+
+        Time Stamp On Sale Order Confirm
+
+        This module updates order date on order confirmation action
+    """,
+    "demo": [],
+    "data": [],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
 }
