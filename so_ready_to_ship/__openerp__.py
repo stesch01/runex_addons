@@ -1,27 +1,39 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    Odoo, Open Source Management Solution
+#    Copyright (C) 2016-TODAY Linserv Aktiebolag, Sweden (<http://www.linserv.se>).
+#
+##############################################################################
 {
-    'name': "so_ready_to_ship",
-
-    'summary': """
-        so_ready_to_ship""",
-
+    "name": "Sale Order Ready To Ship",
+    "version": "1.0",
+    "author": "Linserv AB",
+    "category": "Sales Management",
+    "summary": "Green color order reference name in sales orders views",
+    "website": "www.linserv.se",
+    "contributors": [
+        'Gediminas Venclova <gediminasv@live.com>'
+    ],
+    "license": "",
+    "depends": [
+        'base', 'web', 'sale', 'sale_order_line_view', 'sale_order_dates'
+    ],
     'description': """
-        so_ready_to_ship
+    
+        Sale Order Ready To Ship
+    
+        This module changes color of order reference name in sale order and sale order lines views.
     """,
-
-    'author': "UAB Pralo",
-    'website': "http://www.pralo.eu",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    'depends': ['base', 'web', 'sale', 'sale_order_line_view'],
-
-    'data': [
+    "demo": [],
+    "data": [
         'inherited_sale_order.xml',
         'views/templates.xml',
     ],
+    "test": [],
+    "js": [],
+    "css": [],
+    "qweb": [],
+    "installable": True,
+    "auto_install": False,
 }

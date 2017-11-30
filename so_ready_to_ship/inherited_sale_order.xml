@@ -24,6 +24,12 @@
                  <field name="name" position="attributes">
                     <attribute name="widget">color_on_condition_boolean</attribute>
                 </field>
+                <field name="date_order" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </field>
+                <field name="requested_date" position="attributes">
+                    <attribute name="widget">date</attribute>
+                </field>
             </field>
         </record>
 
