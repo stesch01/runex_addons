@@ -4,12 +4,13 @@ openerp.so_ready_to_ship = function (instance){
     instance.so_ready_to_ship.color_on_condition = instance.web.list.Column.extend({
         format: function (row_data, options) {
             res = this._super.apply(this, arguments);
+            var order_ref = (row_data['order_id'].value[1])
             var qty = parseFloat(row_data['product_uom_qty'].value);
             var qty_on_hand = parseFloat(row_data['qty_on_hand'].value);
             if (qty_on_hand >= qty){
-                return "<font color='#009933'>"+(res)+"</font>";
+                return "<strong><font color='#009933'>"+(order_ref)+"</font></strong>";
             }
-            return res
+            return order_ref
         }
     });
 
@@ -19,7 +20,7 @@ openerp.so_ready_to_ship = function (instance){
             res = this._super.apply(this, arguments);
             var have_qty = row_data['have_qty'].value
             if (have_qty === true){
-                return "<font color='#009933'>"+(res)+"</font>";
+                return "<strong><font color='#009933'>"+(res)+"</font></strong>";
             }
             return res
         }
