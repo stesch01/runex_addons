@@ -18,7 +18,7 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['base', 'web', 'sale'],
+    'depends': ['base', 'web', 'sale', 'sale_order_line_view'],
 
     'data': [
         'inherited_sale_order.xml',
