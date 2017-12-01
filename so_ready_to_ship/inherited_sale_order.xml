@@ -30,9 +30,6 @@
                 <field name="requested_date" position="attributes">
                     <attribute name="widget">date</attribute>
                 </field>
-                <field name="commitment_date" position="attributes">
-                    <attribute name="widget">date</attribute>
-                </field>
             </field>
         </record>
 
