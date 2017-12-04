@@ -7,6 +7,9 @@
             <field name="model">sale.order.line</field>
             <field name="inherit_id" ref="sale.view_order_line_tree"/>
             <field name="arch" type="xml">
+                <field name="salesman_id" position="before">
+                    <field name="qty_on_hand"/>
+                </field>
                 <xpath expr="//field[@name='order_id']" position="attributes">
                     <attribute name="widget">color_on_condition</attribute>
                 </xpath>

@@ -17,7 +17,7 @@
     ],
     "license": "",
     "depends": [
-        'base', 'web', 'sale', 'sale_order_line_view', 'sale_order_dates'
+        'base', 'web', 'sale', 'sale_order_dates'
     ],
     'description': """
     

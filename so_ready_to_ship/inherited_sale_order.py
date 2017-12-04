@@ -2,6 +2,7 @@
 
 from openerp import models, fields
 
+
 class SoReadyToShipSaleOrder(models.Model):
     _inherit = 'sale.order'
 
@@ -13,3 +14,9 @@ class SoReadyToShipSaleOrder(models.Model):
                 so.have_qty = True
             else:
                 so.have_qty = False
+
+
+class SoReadyToShipSaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    qty_on_hand = fields.Float(related='product_id.product_tmpl_id.qty_available', string="On Hand")
