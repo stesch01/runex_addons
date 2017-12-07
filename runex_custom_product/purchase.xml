@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="runex_custom_product_view_product_supplier_inherit_inherit" model="ir.ui.view">
+            <field name="name">runex.custom.product.view.product.supplier.inherit.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <span><strong>Website </strong></span>
+                    <field name="website_published"  widget="website_button"/>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</openerp>
