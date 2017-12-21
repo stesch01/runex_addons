@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>    	
+    	<!-- Paper formate -->
+        <record id="paperformat_runex_custom_label" model="report.paperformat">
+            <field name="name">Runex Custom Product Label 1 A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>    
+	    
+	    <!-- Report Action -->	    
+	    <template id="report_product_label">
+	        <t t-foreach="docs" t-as="o">
+	            <t t-call="runex_product_label.report_product_document" t-lang="o.partner_id.lang"/>
+	        </t>
+	    </template>
+	    
+
+        <report
+            string="Runex​ ​Label​ 1"
+            id="action_report_product"
+            model="product.product"
+            report_type="qweb-pdf"
+            name="runex_product_label.report_product_label"
+            file="runex_product_label.report_product_label"
+        />
+        
+        <!-- custom format assign to report -->
+        <record id="action_report_product" model="ir.actions.report.xml">
+        	<field name="paperformat_id" ref="paperformat_runex_custom_label"/>
+	    </record>	    
+	    
+      </data>  
+</openerp>           

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+	    <template id="report_product_document">
+
+			<t t-call="report.html_container">
+	            
+	                <!-- <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>  -->
+	                <div class="page">
+
+			<!-- product loop -->
+			<t t-foreach="o" t-as="product">
+			<t t-set="counter" t-value="8"/>
+			
+			<t t-foreach="counter" t-as="c">
+				
+				<div style="border:2px solid black; width:480px; height:346px; float:left">
+				
+					<div align="center">
+					
+						<img t-if="product.company_id.logo" t-att-src="'data:image/png;base64,%s' % product.company_id.logo" style="margin-top:14px;height:46.76px"/>
+					
+					</div>
+					
+					<div style="border:2px solid black;margin:14px;height:257.23px">
+					
+						<div style="font-size:22px;background:red;border-bottom:2px solid black;">
+							<b><span t-esc="product.default_code"/></b>
+						</div>
+					
+						<div>
+						
+							<h4><b t-field="product.product_tmpl_id"></b></h4>
+							
+						</div>
+					
+					
+					</div>	
+					
+				
+				</div>
+           	    </t>
+           	   
+           	</t> <!-- product loop end -->                                    
+	                
+	                </div>
+	            
+	            
+	         </t>
+	    
+
+	    
+
+
+	    </template>
+
+</data>
+    
+</openerp>
