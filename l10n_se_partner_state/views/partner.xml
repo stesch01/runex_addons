@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+
+            <record id="view_partners_form_se1_state_visible" model="ir.ui.view">
+                <field name="name">view.res.partner.form.se1.state.visible</field>
+                <field name="model">res.partner</field>
+                <field name="inherit_id" ref="l10n_se.view_partners_form_se1"/>
+                <field name="arch" type="xml">
+                    <field name="state_id" position="attributes">
+                        <attribute name="attrs">{'readonly': [('use_parent_address','=',True)]}</attribute>
+                    </field>
+                </field>
+          </record>
+
+	</data>
+</openerp>
