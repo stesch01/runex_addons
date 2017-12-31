@@ -10,11 +10,8 @@
 
 			<!-- product loop -->
 			<t t-foreach="o" t-as="product">
-			<t t-set="counter" t-value="8"/>
-			
-			<t t-foreach="counter" t-as="c">
 				
-				<div style="border:2px solid black; width:480px; height:346px; float:left">
+				<div style="border:2px solid black; width:480px; height:346px; float:left; margin: 210px; margin-left:250px; margin-top:430px;">
 				
 					<div align="center">
 					
@@ -25,10 +22,10 @@
 					<div style="border:2px solid black;margin:14px;height:257.23px">
 					
 						<div style="font-size:22px;background:red;border-bottom:2px solid black;">
-							<b><span t-esc="product.default_code"/></b>
+							<b><span style="margin-left:10px;" t-esc="product.default_code"/></b>
 						</div>
 					
-						<div>
+						<div style="margin-left:10px;">
 						
 							<h4><b t-field="product.product_tmpl_id"></b></h4>
 							
@@ -39,7 +36,6 @@
 					
 				
 				</div>
-           	    </t>
            	   
            	</t> <!-- product loop end -->                                    
 	                
