@@ -34,9 +34,22 @@
             name="runex_product_label.report_product_label"
             file="runex_product_label.report_product_label"
         />
+
+        <report
+            string="Runex​ ​Label​ 1"
+            id="action_report_product_template"
+            model="product.template"
+            report_type="qweb-pdf"
+            name="runex_product_label.report_product_label"
+            file="runex_product_label.report_product_label"
+        />
         
         <!-- custom format assign to report -->
         <record id="action_report_product" model="ir.actions.report.xml">
+        	<field name="paperformat_id" ref="paperformat_runex_custom_label"/>
+	    </record>	    
+
+	    <record id="action_report_product_template" model="ir.actions.report.xml">
         	<field name="paperformat_id" ref="paperformat_runex_custom_label"/>
 	    </record>	    
 	    
