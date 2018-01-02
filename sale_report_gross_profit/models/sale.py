@@ -44,18 +44,20 @@ class SaleOrderLine(models.Model):
         """
         if not vals: vals = {}
         for line in self:
-            purchase_price = line.purchase_price
+            product_id = line.product_id and line.product_id.id
+            purchase_price = line.product_id and line.product_id.standard_price or 0.0
             price_unit = line.price_unit
             product_uom_qty = line.product_uom_qty
 
-        if 'purchase_price' in vals:
-            purchase_price = vals['purchase_price']
         if 'price_unit' in vals:
             price_unit = vals['price_unit']
         if 'product_uom_qty' in vals:
             product_uom_qty = vals['product_uom_qty']
+        if 'product_id' in vals:
+            product_id = vals['product_id']
+            purchase_price = self.env['product.product'].browse([product_id])[0].standard_price
 
-        if 'purchase_price' in vals or 'price_unit' in vals or 'product_uom_qty' in vals:
+        if 'product_id' in vals or 'price_unit' in vals or 'product_uom_qty' in vals:
             vals['std_gross_profit_line'] = (price_unit - purchase_price) * product_uom_qty
         return super(SaleOrderLine, self).write(vals)
     
