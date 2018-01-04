@@ -13,6 +13,9 @@ _logger = logging.getLogger(__name__)
 
 import openerp.addons.web.controllers.main as main
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf8")
 
 class AuthSignupHomeSplitName(main.Home):
 
