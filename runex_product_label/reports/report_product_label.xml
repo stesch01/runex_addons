@@ -11,7 +11,7 @@
 			<!-- product loop -->
 			<t t-foreach="o" t-as="product">
 				
-				<div style="border:2px solid black; width:480px; height:346px; float:left; margin: 210px; margin-left:250px; margin-top:430px;">
+				<div style="border:2px solid black; width:480px; height:346px; float:left; margin-top:14px;">
 				
 					<div align="center">
 					
