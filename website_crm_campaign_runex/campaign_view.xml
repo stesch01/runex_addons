@@ -9,12 +9,12 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='sale_ok']/.." position="after">
                     <div>
-                        <field name="sale_ok_b2b"/>
-                        <label for="sale_ok_b2b"/>
+                        <field name="sale_ok_b2b" invisible="1"/>
+                        <label for="sale_ok_b2b" invisible="1"/>
                     </div>
                     <div>
-                        <field name="sale_ok_b2c"/>
-                        <label for="sale_ok_b2c"/>
+                        <field name="sale_ok_b2c" invisible="1"/>
+                        <label for="sale_ok_b2c" invisible="1"/>
                     </div>
                 </xpath>
             </field>
