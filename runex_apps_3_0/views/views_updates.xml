@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+      <record model="ir.ui.view" id="website.show_sign_in">
+          <field name="active">False</field>
+      </record>
+
+    <record id="website_sale.products_add_to_cart_inherite" model="ir.ui.view">
+      <field name="name">products_add_to_cart_inherite</field>
+      <field name="inherit_id" ref="website_sale.products_add_to_cart"/>
+      <field name="arch" type="xml">
+          <xpath expr="//a[@class='btn btn-default btn-xs fa fa-shopping-cart a-submit']" position="attributes">
+              <attribute name="class">btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x</attribute>
+              <attribute name="style">padding: 1px 3px;</attribute>
+          </xpath>
+      </field>
+    </record>
+
+    <record id="website.submenu_inherite" model="ir.ui.view">
+      <field name="name">website.submenu.inherited</field>
+      <field name="inherit_id" ref="website.submenu"/>
+      <field name="arch" type="xml">
+        <xpath expr="//span[@t-field='submenu.name']" position="replace">
+            <t t-if="submenu.name=='Webshop'">
+                <i class="fa fa-shopping-cart fa-lg"></i>
+            </t>
+            <t t-if="not submenu.name=='Webshop'">
+                <span t-field="submenu.name"/>
+            </t>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_sale.payment_inherite" model="ir.ui.view">
+      <field name="name">payment_inherite</field>
+      <field name="inherit_id" ref="website_sale.payment"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@class='clearfix']" position="after">
+            <a id="confirm_order" class="btn btn-success btn-s pull-right mb32" href="/shop/confirm_order">
+                <span>Confirm order</span>
+            </a>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_sale_suggest_create_account.cart_inherite" model="ir.ui.view">
+      <field name="name">cart_inherite</field>
+      <field name="inherit_id" ref="website_sale.cart"/>
+      <field name="arch" type="xml">
+          <xpath expr="//a[@href='/web/login?redirect=/shop/checkout']" position="attributes">
+            <attribute name="class">btn btn-success btn-s pull-right mb32</attribute>
+          </xpath>
+
+          <xpath expr="//a[@href='/web/signup?redirect=/shop/checkout']" position="replace">
+          </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>
