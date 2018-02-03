@@ -23,7 +23,7 @@
       <field name="arch" type="xml">
         <xpath expr="//span[@t-field='submenu.name']" position="replace">
             <t t-if="submenu.name=='Webshop'">
-                <i class="fa fa-shopping-cart fa-lg"></i>
+                <i class="fa fa-shopping-cart fa-2x"></i>
             </t>
             <t t-if="not submenu.name=='Webshop'">
                 <span t-field="submenu.name"/>
