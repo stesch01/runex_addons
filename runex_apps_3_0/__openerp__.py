@@ -15,6 +15,7 @@
     'description': """Custom runex website views modifications""",
     'depends': ['website', 'website_sale', 'website_sale_suggest_create_account'],
     'data': [
+        'views/templates.xml',
         'views/views_updates.xml',
     ],
     'installable': True,
