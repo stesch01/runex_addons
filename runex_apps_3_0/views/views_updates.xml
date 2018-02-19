@@ -10,10 +10,9 @@
       <field name="name">products_add_to_cart_inherite</field>
       <field name="inherit_id" ref="website_sale.products_add_to_cart"/>
       <field name="arch" type="xml">
-          <xpath expr="//a[@class='btn btn-default btn-xs fa fa-shopping-cart a-submit']" position="replace">
-              <a class="btn btn_quickview btn-success btn-s" style="padding: 1px 3px;">
-                  <i class="fa fa-shopping-cart"></i>
-              </a>
+          <xpath expr="//a[@class='btn btn-default btn-xs fa fa-shopping-cart a-submit']" position="attributes">
+              <attribute name="class">btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x</attribute>
+              <attribute name="style">padding: 1px 3px;</attribute>
           </xpath>
       </field>
     </record>
@@ -35,12 +34,20 @@
 
     <record id="website_sale.payment_inherite" model="ir.ui.view">
       <field name="name">payment_inherite</field>
+      <field name="inherit_id" ref="website_sale.checkout"/>
+      <field name="arch" type="xml">
+        <xpath expr="//a[@class='btn btn-success btn-lg a-submit']" position="replace">
+          <a class="btn btn-success btn-lg" href="/shop/payment" data-cke-saved-href="/shop/payment">Till kassan <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="17"><span class="fa fa-long-arrow-right cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/></span> </a>
+        </xpath>
+      </field>
+    </record>
+
+    <record id="website_sale.confirmation_inherite" model="ir.ui.view">
+      <field name="name">confirmation_inherite</field>
       <field name="inherit_id" ref="website_sale.payment"/>
       <field name="arch" type="xml">
-        <xpath expr="//div[@class='clearfix']" position="after">
-            <a id="confirm_order" class="btn btn-success btn-s pull-right mb32" href="/shop/confirm_order">
-                <span>Confirm order</span>
-            </a>
+        <xpath expr="//div[@class='oe_structure']" position="before">
+          <a class="btn btn-success btn-lg" href="/shop/confirm_order" data-cke-saved-href="/shop/confirm_order">Confirm order <span tabindex="-1" data-cke-widget-wrapper="1" data-cke-filter="off" class="cke_widget_wrapper cke_widget_inline" data-cke-display-name="span" data-cke-widget-id="17"><span class="fa fa-long-arrow-right cke_widget_element" data-cke-widget-data="{}" data-cke-widget-keep-attr="0" data-widget="icons"/></span> </a>
         </xpath>
       </field>
     </record>
@@ -52,55 +59,6 @@
           </xpath>
 
           <xpath expr="//a[@href='/web/signup?redirect=/shop/checkout']" position="replace">
-          </xpath>
-
-    </template>
-
-    <template id="header_inherite" inherit_id="website_sale.header">
-
-          <xpath expr="//li" position="attributes">
-            <attribute name="id">btn_cart</attribute>
-          </xpath>
-
-          <xpath expr="//a[@href='/shop/cart']" position="after">
-            <div class="dropdown_cart">
-              <div class="modal-header">
-                <h4 class="modal-title">Cart</h4>
-              </div>
-              <div class="container oe_website_sale">
-                <table class="table table-striped table-condensed">
-                  <t t-foreach="website_sale_order.order_line" t-as="line">
-                    <tr>
-                      <td style="width: 20%; height: 40%">
-                        <img itemprop="image" class="img img-responsive" t-att-src="website.image_url(line.product_id, 'image', None if product_image_big else '300x300')" t-att-alt="line.product_id.name"/>
-                      </td>
-                      <td>
-                        <t  t-esc="line.product_id.name"/>
-                      </td>
-                    </tr>
-                  </t>
-                </table>
-                <div class="modal-body">
-                  <table class="pull-right mb8 col-sm-9" id="cart_total" t-if="website_sale_order">
-                    <thead>
-                      <tr width="100" style="border-top: 1px solid #000" id="order_total">
-                        <th>
-                          <h4>Total amount:</h4>
-                        </th>
-                        <th class="text-right">
-                          <h4>
-                            <span t-field="website_sale_order.amount_total" style="white-space: nowrap;" t-field-options="{                       &quot;widget&quot;: &quot;monetary&quot;,                       &quot;from_currency&quot;: &quot;website_sale_order.pricelist_id.currency_id&quot;,                       &quot;display_currency&quot;: &quot;user_id.partner_id.property_product_pricelist.currency_id&quot;                     }"/>
-                          </h4>
-                        </th>
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
-              </div>
-              <a href="/shop/cart" class="btn btn-primary" style="color: white;">
-                <i class="fa fa-shopping-cart"/>Go to cart
-              </a>
-            </div>
           </xpath>
 
     </template>
