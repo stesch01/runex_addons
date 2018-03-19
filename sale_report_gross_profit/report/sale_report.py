@@ -14,7 +14,8 @@ class sale_report(osv.osv):
     
     _columns = {
         'gross_profit': fields.float('Std Gross Profit', readonly=True),
-        'partner_country_id': fields.many2one('res.country', 'Partner Country')
+        'partner_country_id': fields.many2one('res.country', 'Partner Country'),
+        'currency_id': fields.many2one('res.currency', 'Currency'),
     }
 
     def _select(self):
@@ -38,6 +39,7 @@ class sale_report(osv.osv):
                     s.date_confirm as date_confirm,
                     s.partner_id as partner_id,
                     pt.country_id as partner_country_id,
+                    pp.currency_id as currency_id,
                     s.user_id as user_id,
                     s.company_id as company_id,
                     extract(epoch from avg(date_trunc('day',s.date_confirm)-date_trunc('day',s.create_date)))/(24*60*60)::decimal(16,2) as delay,
@@ -59,6 +61,7 @@ class sale_report(osv.osv):
                     left join product_uom u on (u.id=l.product_uom)
                     left join product_uom u2 on (u2.id=t.uom_id)
                     left join product_pricelist pp on (s.pricelist_id = pp.id)
+                    left join res_currency rcu on (pp.currency_id=rcu.id)
                     join res_partner pt on (s.partner_id=pt.id)
                     	left join res_country rc on (pt.country_id=rc.id)
                     join currency_rate cr on (cr.currency_id = pp.currency_id and
@@ -77,6 +80,7 @@ class sale_report(osv.osv):
                     s.date_confirm,
                     s.partner_id,
                     pt.country_id,
+                    pp.currency_id,
                     s.user_id,
                     s.company_id,
                     l.state,
