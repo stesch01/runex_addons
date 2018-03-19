@@ -24,6 +24,7 @@ This module adds computed field "Standard Gross Profit" in Sales Order computed 
 
     'depends': ['sale'],
     'data': [ 
+        'menu/menu.xml',
     ],
 
     'application': False,
