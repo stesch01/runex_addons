@@ -16,6 +16,7 @@ class sale_report(osv.osv):
         'gross_profit': fields.float('Std Gross Profit', readonly=True),
         'partner_country_id': fields.many2one('res.country', 'Partner Country'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
+        'seller_id': fields.many2one('res.partner', string='Main Supplier', help="Main Supplier who has highest priority in Supplier List.", readonly=True),
     }
 
     def _select(self):
@@ -42,6 +43,7 @@ class sale_report(osv.osv):
                     pp.currency_id as currency_id,
                     s.user_id as user_id,
                     s.company_id as company_id,
+                    l.supplier_id as seller_id,
                     extract(epoch from avg(date_trunc('day',s.date_confirm)-date_trunc('day',s.create_date)))/(24*60*60)::decimal(16,2) as delay,
                     l.state,
                     t.categ_id as categ_id,
@@ -86,7 +88,8 @@ class sale_report(osv.osv):
                     l.state,
                     s.pricelist_id,
                     s.project_id,
-                    s.section_id
+                    s.section_id,
+                    l.supplier_id
         """
         return group_by_str
 

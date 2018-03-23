@@ -28,6 +28,7 @@ class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
     std_gross_profit_line = fields.Float('Standard Gross Profit')
+    supplier_id = fields.Many2one(related='product_id.product_tmpl_id.seller_id', store=True)
 
     @api.model
     def create(self, vals):
