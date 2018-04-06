@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+
+		<record id="view_partner_so_header_discount_form" model="ir.ui.view">
+            <field name="name">res.partner.so.header.discount.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<field name="company_id" position="before">
+            		<field name="so_discount"/>
+            	</field>
+            </field>
+        </record>
+
+	</data>
+</openerp>

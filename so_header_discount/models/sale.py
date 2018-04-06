@@ -7,9 +7,12 @@
 ##############################################################################
 
 from openerp import models, fields, api
-import openerp.addons.decimal_precision as dp
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    so_discount = fields.Float('Discount %', digits_compute=dp.get_precision('Account'))
+    so_discount = fields.Float(related="partner_id.so_discount", string='Discount %', readonly=True)
+
+    @api.onchange('partner_id')
+    def onchange_partner_for_discount(self):
+    	self.so_discount = self.partner_id and self.partner_id.so_discount or 0.0

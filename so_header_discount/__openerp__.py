@@ -15,7 +15,7 @@
 ##############################################################
           Sales Order - Discount
 ##############################################################     
-This module adds Discount field in Sales Order
+This module adds Discount field in Partner (Customer) and Sales Order
     """,
 
     'author': 'Linserv AB',
@@ -24,6 +24,7 @@ This module adds Discount field in Sales Order
 
     'depends': ['sale'],
     'data': [ 
+        'views/partner.xml',
         'views/sale.xml',
     ],
 
