@@ -14,10 +14,7 @@ class SaleOrder(models.Model):
 
     @api.depends('partner_id')
     def _set_partner_company(self):
-        cnt = 1
         for order in self:
-            print cnt
-            cnt += 1
             partner_company_id = order.partner_id.id
             if not order.partner_id.is_company and order.partner_id.parent_id:
                 partner_company_id = order.partner_id.parent_id.id
