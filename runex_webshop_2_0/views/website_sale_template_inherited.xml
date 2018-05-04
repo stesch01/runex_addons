@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="submenu_fix" inherit_id="website.submenu" name="Submenu_inherited">
+            <xpath expr="//li/a[@t-ignore='true']" position="replace">
+                <a t-att-href="(website.menu_id.child_id[0] == submenu) and '/' or submenu.url" t-ignore="true"
+                   t-att-target="'_blank' if submenu.new_window else None">
+                    <t t-if="submenu.name=='Webshop'">
+                        <i class="fa fa-shopping-cart fa-lg"></i>
+                    </t>
+                    <t t-if="not submenu.name=='Webshop'">
+                        <span t-field="submenu.name"/>
+                    </t>
+                </a>
+            </xpath>
+        </template>
+
+        <template id="checkout_fix" inherit_id="website_sale.checkout" name="Checkout_inherited">
+            <xpath expr="//div[@class='col-md-8 oe_cart']/div[3]" position="replace">
+                <div class="clearfix">
+                    <a href="/shop/cart" class="btn btn-default btn-success mb32">
+                        <span class="fa fa-long-arrow-left"/>
+                        Return to Cart
+                    </a>
+                    <a class="btn btn-default btn-success pull-right mb32 a-submit">To checkout
+                        <span class="fa fa-long-arrow-right"/>
+                    </a>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="website_sale.continue_shopping" inherit_id="website_sale.cart" customize_show="True" name="Continue Shopping Button Inherited">
+            <xpath expr="//a[@href='/shop/checkout']" position="before">
+                <a href="/shop" class="btn btn-success mb32"><span class="fa fa-long-arrow-left"/> <span class="hidden-xs">Continue Shopping</span><span class="visible-xs-inline">Continue</span></a>
+            </xpath>
+        </template>
+
+        <template id="products_add_to_cart_inherit" inherit_id="website_sale.products_add_to_cart">
+            <xpath expr="//div[@class='product_price']/t[1]/a" position="attributes">
+                <attribute name="class">btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x</attribute>
+                <attribute name="style">padding: 1px 3px;​</attribute>
+            </xpath>
+            <xpath expr="//div[@class='product_price']/t[2]/a" position="attributes">
+                <attribute name="class">btn btn-success btn-s fa fa-shopping-cart fa-2x</attribute>
+                <attribute name="style">padding: 1px 3px;​</attribute>
+            </xpath>
+        </template>
+
+        <template id="website_sale.header" inherit_id="website.layout" name="Header Shop My Cart Link">
+            <xpath expr="//header//ul[@id='top_menu']/li" position="before">
+                <style>
+                    .dropbtn {
+                    color: black;
+                    border: none;
+                    }
+
+                    .dropdown {
+                    position: relative;
+                    display: inline-block;
+                    }
+
+                    .dropdown-content {
+                    padding: 13px;
+                    color: black;
+                    display: none;
+                    position: absolute;
+                    background-color: #f1f1f1;
+                    min-width: 160px;
+                    z-index: 1;
+                    }
+
+                    .dropdown-content a {
+
+                    color: black;
+                    text-decoration: none;
+                    display: block;
+
+                    }
+
+                    .dropdown:hover .dropdown-content {
+                    display: block;
+                    }
+
+                </style>
+                <t t-set="website_sale_order" t-value="website.sale_get_order()"/>
+                <li class="dropdown"
+                    t-att-class="'' if website_sale_order and website_sale_order.cart_quantity else 'hidden'">
+                    <a href="/shop/cart">
+                        <i class="fa fa-shopping-cart"/>
+                        My cart
+                        <sup t-attf-class="my_cart_quantity label label-primary"
+                             t-esc="website_sale_order and website_sale_order.cart_quantity or ''"/>
+                        <div id="wrap" class="dropdown-content">
+                            <div class="container oe_website_sale">
+                                <h3 class="mb32">Shopping Cart</h3>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <t t-set="website_sale_order" t-value="website.sale_get_order()"/>
+                                        <div t-if="not website_sale_order or not website_sale_order.website_order_line"
+                                             class="well well-lg">
+
+                                            Your cart is empty!
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-sm-9 oe_cart">
+                                        <table class='table table-striped table-condensed' id="cart_products"
+                                               t-if="website_sale_order and website_sale_order.website_order_line">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2" width="100">Product</th>
+                                                    <th width="100" class='decimal_precision'
+                                                        t-att-data-precision="website_sale_order.pricelist_id.currency_id.rounding">
+                                                        Price
+                                                    </th>
+                                                    <th width="120">Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="website_sale_order.website_order_line" t-as="line">
+                                                    <tr>
+                                                        <td colspan="2" t-if="not line.product_id.product_tmpl_id"></td>
+                                                        <td align="center" t-if="line.product_id.product_tmpl_id">
+                                                            <span t-field="line.product_id.image_small"
+                                                                  t-field-options='{"widget": "image", "class": "img-rounded"}'/>
+                                                        </td>
+                                                        <td t-if="line.product_id.product_tmpl_id">
+                                                            <div>
+                                                                <a t-attf-href="/shop/product/#{ slug(line.product_id.product_tmpl_id) }">
+                                                                    <strong t-esc="line.product_id.with_context(display_default_code=False).display_name"/>
+                                                                </a>
+                                                            </div>
+                                                            <div class="text-muted"
+                                                                 t-esc="'\n'.join(line.name.splitlines()[1:])"/>
+                                                        </td>
+                                                        <td class="text-center" name="price">
+                                                            <del class="text-danger"
+                                                                 t-att-style="'' if line.product_id.lst_price &gt; line.discounted_price else 'display: none;'"
+                                                                 style="text-decoration: line-through; white-space: nowrap;"
+                                                                 t-field="line.product_id.lst_price" t-field-options='{
+                                            "widget": "monetary",
+                                            "from_currency": "line.company_id.currency_id",
+                                            "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                        }'/>&amp;nbsp;
+
+
+                                                            <span t-field="line.discounted_price"
+                                                                  style="white-space: nowrap;" t-field-options='{
+                                         "widget": "monetary",
+                                         "from_currency": "website_sale_order.pricelist_id.currency_id",
+                                         "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                                     }'/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <div class="input-group oe_website_spinner">
+                                                                <span class="input-group-addon">
+                                                                    <a t-attf-href="#" class="mb8 js_add_cart_json"
+                                                                       data-no-instant="">
+                                                                        <i class="fa fa-minus"></i>
+                                                                    </a>
+                                                                </span>
+                                                                <input type="text" class="js_quantity form-control"
+                                                                       t-att-data-line-id="line.id"
+                                                                       t-att-data-product-id="line.product_id.id"
+                                                                       t-att-value="int(line.product_uom_qty)"/>
+                                                                <span class="input-group-addon">
+                                                                    <a t-attf-href="#"
+                                                                       class="mb8 float_left js_add_cart_json"
+                                                                       data-no-instant="">
+                                                                        <i class="fa fa-plus"></i>
+                                                                    </a>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                        <t t-call="website_sale.total"/>
+                                        <div class="clearfix"/>
+                                        <a t-if="not optional_products and website_sale_order and website_sale_order.website_order_line"
+                                           class="btn btn-success pull-right mb32" href="/shop/checkout">
+                                            <span class="hidden-xs">Process Checkout</span>
+                                            <span class="visible-xs-inline">Checkout</span>
+                                            <span class="fa fa-long-arrow-right"/>
+                                        </a>
+                                        <div class="oe_structure"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="oe_structure"/>
+                        </div>
+                    </a>
+                </li>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
