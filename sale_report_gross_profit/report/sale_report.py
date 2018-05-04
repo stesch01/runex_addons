@@ -17,6 +17,7 @@ class sale_report(osv.osv):
         'partner_country_id': fields.many2one('res.country', 'Partner Country'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
         'seller_id': fields.many2one('res.partner', string='Main Supplier', help="Main Supplier who has highest priority in Supplier List.", readonly=True),
+        'partner_company_id': fields.many2one('res.partner', string='Customer Company', readonly=True),
     }
 
     def _select(self):
@@ -39,6 +40,7 @@ class sale_report(osv.osv):
                     s.date_order as date,
                     s.date_confirm as date_confirm,
                     s.partner_id as partner_id,
+                    s.partner_company_id as partner_company_id,
                     pt.country_id as partner_country_id,
                     pp.currency_id as currency_id,
                     s.user_id as user_id,
@@ -81,6 +83,7 @@ class sale_report(osv.osv):
                     s.date_order,
                     s.date_confirm,
                     s.partner_id,
+                    s.partner_company_id,
                     pt.country_id,
                     pp.currency_id,
                     s.user_id,

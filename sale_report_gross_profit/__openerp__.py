@@ -22,9 +22,11 @@ This module adds computed field "Standard Gross Profit" in Sales Order computed 
     'contributors': ['Riyaj Pathan <rjpathan19@gmail.com>'],
     'website': 'www.linserv.se/en/',
 
-    'depends': ['sale'],
+    'depends': ['sale', 'sale_contact_company_filter'],
     'data': [ 
         'menu/menu.xml',
+
+        'report/sale_report.xml',
     ],
 
     'application': False,
