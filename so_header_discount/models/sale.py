@@ -11,8 +11,12 @@ from openerp import models, fields, api
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    so_discount = fields.Float(related="partner_id.so_discount", string='Discount %', readonly=True)
+    so_discount = fields.Float(compute='compute_partner_discount', string='Discount %', readonly=True, Store=True)
 
-    @api.onchange('partner_id')
-    def onchange_partner_for_discount(self):
-    	self.so_discount = self.partner_id and self.partner_id.so_discount or 0.0
+    @api.one
+    @api.depends('partner_id')
+    def compute_partner_discount(self):
+    	if self.partner_id.parent_id:
+    		self.so_discount = self.partner_id.parent_id.so_discount or 0.0
+    	elif self.partner_id.so_discount:
+    		self.so_discount = self.partner_id and self.partner_id.so_discount or 0.0
