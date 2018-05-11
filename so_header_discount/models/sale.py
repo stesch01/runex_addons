@@ -16,7 +16,9 @@ class SaleOrder(models.Model):
     @api.one
     @api.depends('partner_id')
     def compute_partner_discount(self):
+    	discount = 0
     	if self.partner_id.parent_id:
-    		self.so_discount = self.partner_id.parent_id.so_discount or 0.0
-    	elif self.partner_id.so_discount:
-    		self.so_discount = self.partner_id and self.partner_id.so_discount or 0.0
+    		discount = self.partner_id.parent_id.so_discount or 0.0
+    	if not discount:
+    		discount = self.partner_id and self.partner_id.so_discount or 0.0
+    	self.so_discount = discount
