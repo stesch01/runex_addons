@@ -4,7 +4,7 @@
     'version': '1.0',
     'author': 'Linserv AB',
     'sequence': 1,
-    'summary': 'Skip payment for public users',
+    'summary': 'eCommerce Optional Products Enable',
     'website': 'www.linserv.se',
     'contributors': [
         'Azer GHADHOUN <ghadhoun.azer@gmail.com>'
