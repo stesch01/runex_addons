@@ -35,7 +35,7 @@ class ResPartner(models.Model):
     def write(self, vals):
         if not vals: vals = {}
         for partner in self:
-            if 'is_company' in vals or 'parent_id' in vals:
+            if 'is_company' in vals or 'parent_id' in vals or 'so_discount' in vals:
                 is_company, parent = False, False
                 if 'is_company' in vals:
                     is_company = vals['is_company']
@@ -50,4 +50,17 @@ class ResPartner(models.Model):
 
                     company_discount = self.browse([parent]).so_discount
                     vals['so_discount'] = company_discount
+                
+                else:#if its company, update SO discount in all its Contacts
+                    company_discount = partner.so_discount
+                    if 'so_discount' in vals:
+                        company_discount = vals['so_discount']
+
+                    contact_ids = self.search([('parent_id','=',partner.id), ('is_company','=',False)])
+                    contacts = []
+                    temp = [contacts.append(str(c.id)) for c in contact_ids]
+                    contact_result = ', '.join(contacts)
+                    if contacts:
+                        partner._cr.execute("""update res_partner set so_discount = %s where id in (%s);"""%(company_discount, contact_result))
+
             return super(ResPartner, partner).write(vals)
