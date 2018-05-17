@@ -1,0 +1,25 @@
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="sale_margin_percent_sale_order">
+            <field name="name">sale.order.margin.percent.view.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+            <field name="arch" type="xml">
+                <group name="sale_margin_grp" position="before">
+                    <group name="sale_margin_grp2">
+                        <div class="oe_inline">
+                            <label style="font-weight: bold;" for="margin"/>
+                            <field name="margin" widget='monetary' options="{'currency_field': 'currency_id'}" groups="base.group_user" class="oe_inline" style="padding-left: 100px;"/>
+                            <field name="so_margin_percent" class="oe_inline" style="padding-left: 15px;"/>%%
+                        </div>
+                    </group>
+                </group>
+
+                <group name="sale_margin_grp" position="replace"/>
+
+            </field>
+        </record>
+
+	</data>
+</openerp>
