@@ -22,5 +22,8 @@ class SaleOrder(models.Model):
                 if line.state == 'cancel':
                     continue
                 margin += line.margin or 0.0
-            sale.so_margin_percent = (margin / sale.amount_untaxed) * 100
+            if sale.amount_untaxed != 0:
+                sale.so_margin_percent = (margin / sale.amount_untaxed) * 100
+            else:
+                sale.so_margin_percent = 0
             
