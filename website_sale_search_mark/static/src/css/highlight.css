@@ -1,0 +1,21 @@
+.highlighted .highlight {
+    background-color: #FCA150;
+}
+
+[contenteditable="true"].single-line {
+    white-space: nowrap;
+    width:200px;
+    overflow: hidden;
+}
+[contenteditable="true"].single-line * {
+    display:inline;
+    white-space:nowrap;
+}
+.highlighted[contenteditable="true"]{
+    text-align:left;
+}
+.highlighted[contenteditable="true"]:empty:before{
+  content: attr(placeholder);
+  display: block; /* For Firefox */
+  cursor: text;
+}
