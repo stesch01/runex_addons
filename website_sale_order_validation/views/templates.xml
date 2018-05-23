@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'website_sale'), ('name', '=', 'payment')]" />
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+
+        <template id="assets_frontend" name="hide payment error" inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <link href="/website_sale_order_validation/static/src/css/payment.css" rel="stylesheet" type="text/less"/>
+            </xpath>
+        </template>
+
+        <template id="confirmation" inherit_id="website_sale.confirmation">
+            <xpath expr="//ul[@class='wizard pull-right']" position="replace">
+              <ul class="wizard pull-right">
+                <li class="text-muted">Review Order<span class="chevron"></span></li>
+                <li class="text-muted">Shipping &amp; Billing<span class="chevron"></span></li>
+                <li class="text-muted">Confirmation<span class="chevron"></span></li>
+                <li style="border-right-width: 1px;border-radius: 0 6px 6px 0;"
+                    class="text-primary">Confirmed
+                <i class="fa fa-check" aria-hidden="true"></i>
+                </li>
+              </ul>
+            </xpath>
+            <xpath expr="//div[@class='oe_website_sale_tx_status']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+            <xpath expr="//div[@class='oe_website_sale_tx_status']" position="after">
+              <h4 class="well">
+                <span style="color: rgb(62, 150, 202);">
+                    Your order has been received. We review it manually, add shipping and packaging, and then send you an order confirmation.
+                </span>
+              </h4>
+              <h4 class="well">
+                <span style="color: rgb(62, 150, 202);">
+                    We send invocie by email. Customers with granted credit have payment terms by agreement, usually 15 days. For others, prepayment applies.
+                </span>
+              </h4>
+            </xpath>
+        </template>
+
+        <template id="payment" inherit_id="website_sale.payment">
+            <xpath expr="//div[@id='payment_method']" position="attributes">
+                <attribute name="t-if">False</attribute>
+            </xpath>
+            <xpath expr="//ul[@class='wizard pull-right']" position="replace">
+              <ul class="wizard pull-right">
+                  <li class="text-primary">Review Order<span class="chevron"></span></li>
+                  <li class="text-muted">Shipping &amp; Billing<span class="chevron"></span></li>
+                  <li class="text-primary">Confirmation<span class="chevron"></span></li>
+                  <li style="border-right-width: 1px;border-radius: 0 6px 6px 0;"
+                        class="text-muted">Confirmed</li>
+              </ul>
+            </xpath>
+            <xpath expr="//t[@t-call='website_sale.total']" position="after">
+                <t t-if="not acquirers">
+                    <div class="clearfix"/>
+                    <div class="oe_structure">
+                        <a href="/shop/order/validate" class="btn btn-default btn-success pull-right mb32">
+                                Confirm Order
+                                <span class="fa fa-long-arrow-right"></span>
+                        </a>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</openerp>
