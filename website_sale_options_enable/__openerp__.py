@@ -1,10 +1,10 @@
 {
-    'name': 'eCommerce Optional Products Enable',
+    'name': 'eCommerce Quick Add to cart',
     'category': 'Website',
     'version': '1.0',
     'author': 'Linserv AB',
     'sequence': 1,
-    'summary': 'eCommerce Optional Products Enable',
+    'summary': 'eCommerce Add to cart with optional products',
     'website': 'www.linserv.se',
     'contributors': [
         'Azer GHADHOUN <ghadhoun.azer@gmail.com>'
