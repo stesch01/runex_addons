@@ -2,7 +2,7 @@
 {
     'name': 'Theme B2B Extend',
     'version': '1.0',
-    'category': 'Theme',
+    'category': 'Wesbite',
     'sequence': 1,
     'author': 'Linserv AB',
     'website': 'www.linserv.se',

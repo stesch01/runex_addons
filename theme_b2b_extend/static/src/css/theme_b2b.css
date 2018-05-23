@@ -7,7 +7,7 @@
 }
 #b2b-menu > div > div > ul > li > a {
     color: var(--links-color);
-    font-size: 18px;
+    font-size: 16px;
 }
 #b2b-menu > div > div > ul > li > a:hover,
 #b2b-menu > div > div > ul > li > a:focus {
