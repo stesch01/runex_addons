@@ -8,5 +8,11 @@
   </xpath>
 </template>
 
+<template id="modal" inherit_id="website_sale_options.modal" name="Shop Product Options button">
+  <xpath expr="//a[@class='btn btn-default a-submit js_goto_shop']" position="attributes">
+      <attribute name="class" >btn btn-primary a-submit js_goto_shop</attribute>
+  </xpath>
+</template>
+
 </data>
 </openerp>
