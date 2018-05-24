@@ -35,4 +35,13 @@ class SaleOrder(models.Model):
                         states.insert(draft_index+1, web_confirmed_tuple)
         except:
             pass
+        try:
+            # copy readonly, invisible, required attrs from draft state
+            for field_name, field_val in fields.iteritems():
+                if 'states' in field_val:
+                    for state in field_val['states'].keys():
+                        if state == 'draft':
+                            field_val['states']['web_confirmed'] = field_val['states'][state][:]
+        except:
+            pass
         return fields
