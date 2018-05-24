@@ -4,7 +4,7 @@
     'version': '1.0',
     'author': 'Linserv AB',
     'sequence': 1,
-    'summary': 'Website Search Highlight',
+    'summary': 'Website cart quick preview',
     'website': 'www.linserv.se',
     'contributors': [
         'Azer GHADHOUN <ghadhoun.azer@gmail.com>'
