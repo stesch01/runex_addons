@@ -1,34 +1,21 @@
-.highlight_wrap .highlighted[contenteditable="true"]:empty:before{
-  content: attr(placeholder);
-  display: block; /* For Firefox */
-  cursor: text;
-}
-.highlight_wrap {
-    display: table-cell;
-    position: relative;
-    overflow: hidden;
-}
-.highlight_wrap > *{
-    position: absolute!important;
-    top: 0;
-    left: 0;
-    width: 100%!important;
-    height: 100%!important;
-    text-align: left;
-    white-space: nowrap;
-    overflow: visible;
-    display:inline;
-    border: 0;
-    outline: 0;
-    padding: 6px 12px;
-}
-.highlight_wrap .highlighted {
-    background: transparent;
-}
-.highlight_wrap .highlight {
-    z-index: -2 !important;
-    color: transparent;
-}
-.highlight_wrap .highlight .marker{
+.oe_website_sale .tokenfield .token {
+    border: 1px solid #FCA150;
     background-color: #FCA150;
+    color: white;
+}
+.oe_website_sale .tokenfield .token.active {
+    border-color: rgb(31, 45, 31);
+}
+.oe_website_sale .tokenfield.form-control {
+    text-align: left;
+}
+
+@media (min-width: 992px){
+    form.pagination.form-inline.col-md-3 {
+        width: 40%;
+    }
+}
+form.pagination.form-inline.col-md-3>.input-group{
+    width: 100%;
+    display: inline-flex;
 }
