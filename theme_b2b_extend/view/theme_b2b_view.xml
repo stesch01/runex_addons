@@ -2,11 +2,17 @@
 <openerp>
     <data>
 
+        <template id="assets_frontend" inherit_id="website.assets_frontend" name="B2b extend ">
+            <xpath expr="." position="inside">
+                <link href="/theme_b2b_extend/static/src/css/frontend.css" rel="stylesheet" type="text/css" />
+            </xpath>
+        </template>
+
         <template id="theme_b2b_extend" inherit_id="theme_b2b.theme_b2b" customize_show="True" active="False" name="Theme B2B Runex Colors" priority="99">
             <!-- Customize CSS -->
             <xpath expr="//link[@href='/theme_b2b/static/src/css/theme_b2b.css']" position="after">
                 <link href="/theme_b2b_extend/static/src/css/theme_b2b.css" rel="stylesheet" type="text/css" />
-                <link href="/theme_b2b_extend/static/src/css/frontend.css" rel="stylesheet" type="text/css" />
+                <link href="/theme_b2b_extend/static/src/css/frontend_extend.css" rel="stylesheet" type="text/css" />
             </xpath>
         </template>
 

@@ -1,0 +1,12 @@
+﻿a{
+    color: var(--links-color) ;
+}
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
+    background-color: transparent;
+}
+.pagination > li > a, .pagination > li > span{
+    color: var(--links-color) !important;
+}
+.oe_product strong {
+    font-weight: normal;
+}
