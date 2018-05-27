@@ -125,7 +125,8 @@ class res_partner(osv.osv):
     def _property_product_pricelist(self, cr, uid, ids, name, arg, context=None):
         res = {}
         for id in ids:
-            if id == self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'public_partner')[1]:
+            # if id == self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'public_partner')[1]:
+            if True:
                 lang = request.context.get('lang')
                 pricelist = self.pool.get('product.pricelist').browse(cr, uid,
                     self.pool.get('product.pricelist').search(cr, uid,
@@ -142,23 +143,23 @@ class res_partner(osv.osv):
                                 cr,uid,[
                                     ('currency_id.country_ids.code','in',langs),
                                     ('company_id','=',company.id),
-                                    ('type', '=', 'sale'),
+                                    # ('type', '=', 'sale'),
                                 ],
                                 context=context,limit=1)
                             if pricelist_list:
                                 pricelist = self.pool.get('product.pricelist').browse(cr, uid,pricelist_list ,context=context)
                     if not pricelist:
                         raise Warning(_("No pricelist found for your language! Please contact the administrator."))
-            else:
-                partner = self.pool.get('res.partner').read(cr, uid, id, ['partner_product_pricelist', 'lang', 'commercial_partner_id'], context=context)
-                # The compute breaks the commercial fields handling. Check if this partner is it's own commercial partner to account for that.
-                if partner['commercial_partner_id'] and partner['commercial_partner_id'][0] != id:
-                    # Get the pricelist from the commercial partner and move along.
-                    res[id] = self._property_product_pricelist(cr, uid, [partner['commercial_partner_id'][0]], name, arg, context)[partner['commercial_partner_id'][0]]
-                    continue
-                lang = partner['lang']
-                pricelist = self.pool.get('product.pricelist').browse(cr, uid,
-                    partner['partner_product_pricelist'] and partner['partner_product_pricelist'][0] or [], context=context)
+            # else:
+            #     partner = self.pool.get('res.partner').read(cr, uid, id, ['partner_product_pricelist', 'lang', 'commercial_partner_id'], context=context)
+            #     # The compute breaks the commercial fields handling. Check if this partner is it's own commercial partner to account for that.
+            #     if partner['commercial_partner_id'] and partner['commercial_partner_id'][0] != id:
+            #         # Get the pricelist from the commercial partner and move along.
+            #         res[id] = self._property_product_pricelist(cr, uid, [partner['commercial_partner_id'][0]], name, arg, context)[partner['commercial_partner_id'][0]]
+            #         continue
+            #     lang = partner['lang']
+            #     pricelist = self.pool.get('product.pricelist').browse(cr, uid,
+            #         partner['partner_product_pricelist'] and partner['partner_product_pricelist'][0] or [], context=context)
             if pricelist:
                 #if pricelist.is_fixed:
                 #    res[id] = pricelist.id
