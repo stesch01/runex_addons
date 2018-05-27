@@ -113,6 +113,12 @@ class crm_tracking_campaign(models.Model):
         return super(crm_tracking_campaign, self).get_campaigns().filtered(lambda c: (c.reseller_pricelist or c.pricelist) and self.env.context.get('lang') == c.lang.code)
 
 
+class res_currency(models.Model):
+    _inherit = 'res.currency'
+
+    country_ids = fields.One2many(comodel_name='res.country', inverse_name='currency_id', string='Countries')
+
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
 
@@ -125,7 +131,24 @@ class res_partner(osv.osv):
                     self.pool.get('product.pricelist').search(cr, uid,
                         [('language_ids.code', '=', lang)], context=context), context=context)
                 if not pricelist:
-                    raise Warning(_("No pricelist found for your language! Please contact the administrator."))
+                    # Fallback if no pricelist found
+                    company_list = self.pool.get('website').search(cr, uid, [], limit=1)
+                    company = self.pool.get('website').browse(cr, uid, company_list).company_id
+                    if company:
+                        langs = lang.split('_')
+                        country_code = langs and len(langs) == 2 and langs[1]
+                        if country_code:
+                            pricelist_list = self.pool.get('product.pricelist').search(
+                                cr,uid,[
+                                    ('currency_id.country_ids.code','in',langs),
+                                    ('company_id','=',company.id),
+                                    ('type', '=', 'sale'),
+                                ],
+                                context=context,limit=1)
+                            if pricelist_list:
+                                pricelist = self.pool.get('product.pricelist').browse(cr, uid,pricelist_list ,context=context)
+                    if not pricelist:
+                        raise Warning(_("No pricelist found for your language! Please contact the administrator."))
             else:
                 partner = self.pool.get('res.partner').read(cr, uid, id, ['partner_product_pricelist', 'lang', 'commercial_partner_id'], context=context)
                 # The compute breaks the commercial fields handling. Check if this partner is it's own commercial partner to account for that.
@@ -184,7 +207,10 @@ class ResPartner(models.Model):
 class res_lang(models.Model):
     _inherit = 'res.lang'
 
-    pricelist = fields.Many2one(comodel_name='product.pricelist', string='Price List')
+    pricelist = fields.Many2one(
+        comodel_name='product.pricelist',
+        domain=[('type', '=', 'sale')],
+        string='Price List')
 
 
 class product_pricelist(models.Model):
