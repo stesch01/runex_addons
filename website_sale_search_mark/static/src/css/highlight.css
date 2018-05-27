@@ -10,6 +10,10 @@
     text-align: left;
 }
 
+#product_detail .col-sm-3 form[action$="/shop"] {
+    width: 100%;
+}
+
 @media (min-width: 992px){
     form.pagination.form-inline.col-md-3 {
         width: 40%;
