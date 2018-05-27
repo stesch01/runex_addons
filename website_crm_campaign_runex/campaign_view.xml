@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+    <data noupdate="1">
+        <record model="ir.config_parameter" id="param_search_fields">
+            <field name="key">alt.product.search.fields</field>
+            <field name="value">name description description_sale product_variant_ids.default_code product_variant_ids.default_code attribute_line_ids.value_ids.name public_categ_ids.name website_style_ids.name</field>
+        </record>
+    </data>
     <data>
 
         <record id="product.product_template_only_form_view" model="ir.ui.view">
