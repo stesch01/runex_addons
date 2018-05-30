@@ -135,19 +135,20 @@ class res_partner(osv.osv):
                     # Fallback if no pricelist found
                     company_list = self.pool.get('website').search(cr, uid, [], limit=1)
                     company = self.pool.get('website').browse(cr, uid, company_list).company_id
-                    if company:
-                        langs = lang.split('_')
-                        country_code = langs and len(langs) == 2 and langs[1]
-                        if country_code:
-                            pricelist_list = self.pool.get('product.pricelist').search(
-                                cr,uid,[
-                                    ('currency_id.country_ids.code','in',langs),
-                                    ('company_id','=',company.id),
-                                    # ('type', '=', 'sale'),
-                                ],
-                                context=context,limit=1)
-                            if pricelist_list:
-                                pricelist = self.pool.get('product.pricelist').browse(cr, uid,pricelist_list ,context=context)
+                    langs = lang.split('_')
+                    country_code = langs and len(langs) == 2 and langs[1]
+                    companies = (False,) if not company else (False, company.id)
+                    if country_code:
+                        pricelist_list = self.pool.get('product.pricelist').search(
+                            cr,uid,[
+                                ('currency_id.country_ids.code','in',langs),
+                                ('company_id','in',companies),
+                                ('type', '=', 'sale'),
+                                ('version_id', '!=', False),
+                            ],
+                            context=context,limit=1)
+                        if pricelist_list:
+                            pricelist = self.pool.get('product.pricelist').browse(cr, uid,pricelist_list ,context=context)
                     if not pricelist:
                         raise Warning(_("No pricelist found for your language! Please contact the administrator."))
             # else:
