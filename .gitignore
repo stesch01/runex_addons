@@ -34,3 +34,34 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Installer logs
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.cache
+coverage.xml
+
+
+# Pycharm
+.idea
+
+# Rope
+.ropeproject
+
+# Sphinx documentation
+docs/_build/
+
+# Backup files
+*~
+*.swp
+
+# OSX Files
+*.DS_Store

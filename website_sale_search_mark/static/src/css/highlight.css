@@ -1,0 +1,27 @@
+.oe_website_sale .tokenfield .token {
+    border: 1px solid #FCA150;
+    background-color: #FCA150;
+    color: white;
+}
+.oe_website_sale .tokenfield .token.active {
+    border-color: rgb(31, 45, 31);
+}
+.oe_website_sale .tokenfield.form-control {
+    text-align: left;
+}
+
+#product_detail .col-sm-3 form[action$="/shop"] {
+    width: 100%;
+}
+
+@media (min-width: 992px){
+    form.pagination.form-inline.col-md-3 {
+        width: 40%;
+    }
+}
+@media (min-width: 768px){
+    form.pagination.form-inline.col-md-3>.input-group{
+        width: 100%;
+        display: inline-flex;
+    }
+}

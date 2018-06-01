@@ -1,0 +1,53 @@
+﻿:root{
+    --theme-menu-background: #ddd;
+    --links-color: #1c277b;
+}
+#b2b-menu, .b2b-footer {
+    background-color: var(--theme-menu-background)!important;
+}
+#b2b-menu > div > div > ul > li > a {
+    color: var(--links-color);
+    font-size: 16px;
+}
+#b2b-menu > div > div > ul > li > a:hover,
+#b2b-menu > div > div > ul > li > a:focus {
+    color: var(--secondary-color);
+    background-color: transparent;
+}
+#b2b-menu > div > div > ul > .active > a {
+    color: var(--secondary-color);
+    background-color: transparent;
+}
+#b2b-menu .dropdown-menu {
+    background: #ddd;
+    border-top: 0;
+}
+#b2b-menu .dropdown-menu > li > a {color: var(--links-color);}
+
+#b2b-menu .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus
+{
+    color: var(--secondary-color);
+    background-color: transparent;
+}
+.b2b-footer {
+    color: var(--secondary-color);
+}
+.b2b-footer a {
+    color: var(--secondary-color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

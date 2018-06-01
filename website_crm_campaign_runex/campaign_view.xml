@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+    <data noupdate="1">
+        <record model="ir.config_parameter" id="param_search_fields">
+            <field name="key">alt.product.search.fields</field>
+            <field name="value">name description description_sale product_variant_ids.default_code product_variant_ids.default_code attribute_line_ids.value_ids.name public_categ_ids.name website_style_ids.name</field>
+        </record>
+    </data>
     <data>
 
         <record id="product.product_template_only_form_view" model="ir.ui.view">
@@ -73,16 +79,16 @@
             </field>
         </record>
 
-        <record id="view_partner_property_form" model="ir.ui.view">
-            <field name="name">res.partner.product.property.form.inherited.website_crm_campaign_runex</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="product.view_partner_property_form"/>
-            <field name="arch" type="xml">
-                <field name="property_product_pricelist" position="before">
-                    <field name="partner_product_pricelist" groups="product.group_sale_pricelist"/>
-                </field>
-            </field>
-        </record>
+        <!--<record id="view_partner_property_form" model="ir.ui.view">-->
+            <!--<field name="name">res.partner.product.property.form.inherited.website_crm_campaign_runex</field>-->
+            <!--<field name="model">res.partner</field>-->
+            <!--<field name="inherit_id" ref="product.view_partner_property_form"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="property_product_pricelist" position="before">-->
+                    <!--<field name="partner_product_pricelist" groups="product.group_sale_pricelist"/>-->
+                <!--</field>-->
+            <!--</field>-->
+        <!--</record>-->
 
         <record id="crm_tracking_campaign_form" model="ir.ui.view">
             <field name="name">crm.tracking.campaign.form.inherited.website_crm_campaign_runex</field>
@@ -379,22 +385,22 @@
                 </span>
             </xpath>
             <xpath expr="//span[@class='input-group-btn']" position="after">
-                <span class="input-group-btn">
+                <span t-if="products" class="input-group-btn">
                     <form t-att-action="'%s/page/%s?search=%s' %(url, page, search)" method="post">
                         <input type="hidden" name="view_type" value="grid_view"/>
                         <input type="hidden" name="limit" t-att-value="limit"/>
                         <input type="hidden" name="page" t-att-value="page"/>
-                        <button t-if="products" type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'grid_view' else 'default')">
+                        <button type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'grid_view' else 'default')">
                             <i class="fa fa-table"></i>
                         </button>
                     </form>
                 </span>
-                <span class="input-group-btn">
+                <span t-if="products" class="input-group-btn">
                     <form t-att-action="'%s/page/%s?search=%s' %(url, page, search)" method="post">
                         <input type="hidden" name="view_type" value="list_view"/>
                         <input type="hidden" name="limit" t-att-value="limit"/>
                         <input type="hidden" name="page" t-att-value="page"/>
-                        <button t-if="products" type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'list_view' else 'default')">
+                        <button type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'list_view' else 'default')">
                             <i class="fa fa-list-alt"></i>
                         </button>
                     </form>

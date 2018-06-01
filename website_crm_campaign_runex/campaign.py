@@ -113,29 +113,54 @@ class crm_tracking_campaign(models.Model):
         return super(crm_tracking_campaign, self).get_campaigns().filtered(lambda c: (c.reseller_pricelist or c.pricelist) and self.env.context.get('lang') == c.lang.code)
 
 
+class res_currency(models.Model):
+    _inherit = 'res.currency'
+
+    country_ids = fields.One2many(comodel_name='res.country', inverse_name='currency_id', string='Countries')
+
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     def _property_product_pricelist(self, cr, uid, ids, name, arg, context=None):
         res = {}
         for id in ids:
-            if id == self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'public_partner')[1]:
+            # if id == self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'public_partner')[1]:
+            if True:
                 lang = request.context.get('lang')
                 pricelist = self.pool.get('product.pricelist').browse(cr, uid,
                     self.pool.get('product.pricelist').search(cr, uid,
                         [('language_ids.code', '=', lang)], context=context), context=context)
                 if not pricelist:
-                    raise Warning(_("No pricelist found for your language! Please contact the administrator."))
-            else:
-                partner = self.pool.get('res.partner').read(cr, uid, id, ['partner_product_pricelist', 'lang', 'commercial_partner_id'], context=context)
-                # The compute breaks the commercial fields handling. Check if this partner is it's own commercial partner to account for that.
-                if partner['commercial_partner_id'] and partner['commercial_partner_id'][0] != id:
-                    # Get the pricelist from the commercial partner and move along.
-                    res[id] = self._property_product_pricelist(cr, uid, [partner['commercial_partner_id'][0]], name, arg, context)[partner['commercial_partner_id'][0]]
-                    continue
-                lang = partner['lang']
-                pricelist = self.pool.get('product.pricelist').browse(cr, uid,
-                    partner['partner_product_pricelist'] and partner['partner_product_pricelist'][0] or [], context=context)
+                    # Fallback if no pricelist found
+                    company_list = self.pool.get('website').search(cr, uid, [], limit=1)
+                    company = self.pool.get('website').browse(cr, uid, company_list).company_id
+                    langs = lang.split('_')
+                    country_code = langs and len(langs) == 2 and langs[1]
+                    companies = (False,) if not company else (False, company.id)
+                    if country_code:
+                        pricelist_list = self.pool.get('product.pricelist').search(
+                            cr,uid,[
+                                ('currency_id.country_ids.code','in',langs),
+                                ('company_id','in',companies),
+                                ('type', '=', 'sale'),
+                                ('version_id', '!=', False),
+                            ],
+                            context=context,limit=1)
+                        if pricelist_list:
+                            pricelist = self.pool.get('product.pricelist').browse(cr, uid,pricelist_list ,context=context)
+                    if not pricelist:
+                        raise Warning(_("No pricelist found for your language! Please contact the administrator."))
+            # else:
+            #     partner = self.pool.get('res.partner').read(cr, uid, id, ['partner_product_pricelist', 'lang', 'commercial_partner_id'], context=context)
+            #     # The compute breaks the commercial fields handling. Check if this partner is it's own commercial partner to account for that.
+            #     if partner['commercial_partner_id'] and partner['commercial_partner_id'][0] != id:
+            #         # Get the pricelist from the commercial partner and move along.
+            #         res[id] = self._property_product_pricelist(cr, uid, [partner['commercial_partner_id'][0]], name, arg, context)[partner['commercial_partner_id'][0]]
+            #         continue
+            #     lang = partner['lang']
+            #     pricelist = self.pool.get('product.pricelist').browse(cr, uid,
+            #         partner['partner_product_pricelist'] and partner['partner_product_pricelist'][0] or [], context=context)
             if pricelist:
                 #if pricelist.is_fixed:
                 #    res[id] = pricelist.id
@@ -184,7 +209,10 @@ class ResPartner(models.Model):
 class res_lang(models.Model):
     _inherit = 'res.lang'
 
-    pricelist = fields.Many2one(comodel_name='product.pricelist', string='Price List')
+    pricelist = fields.Many2one(
+        comodel_name='product.pricelist',
+        domain=[('type', '=', 'sale')],
+        string='Price List')
 
 
 class product_pricelist(models.Model):
@@ -463,3 +491,31 @@ class website_sale(website_sale):
             return request.env['ir.translation'].search([('res_id', '=', product.id), ('name', '=', 'product.template,name'), ('type', '=', 'model'), ('lang', '=', context.get('lang'))])[-1].value
         except:
             return product.name
+
+    def _get_search_domain(self, search, category, attrib_values):
+        domain = request.website.sale_product_domain()
+
+        if search:
+            search_fields = request.env['ir.config_parameter'].get_param('alt.product.search.fields', 'name description description_sale product_variant_ids.default_code').split(" ")
+            for srch in search.split(" "):
+                domain += ['|' for x in range(len(search_fields) - 1)] + [(f, 'ilike', srch) for f in search_fields]
+        if category:
+            domain += [('public_categ_ids', 'child_of', int(category))]
+
+        if attrib_values:
+            attrib = None
+            ids = []
+            for value in attrib_values:
+                if not attrib:
+                    attrib = value[0]
+                    ids.append(value[1])
+                elif value[0] == attrib:
+                    ids.append(value[1])
+                else:
+                    domain += [('attribute_line_ids.value_ids', 'in', ids)]
+                    attrib = value[0]
+                    ids = [value[1]]
+            if attrib:
+                domain += [('attribute_line_ids.value_ids', 'in', ids)]
+
+        return domain
