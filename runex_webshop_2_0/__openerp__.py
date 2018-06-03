@@ -16,7 +16,7 @@
         'Gediminas Venclova <gediminasv@live.com>'
     ],
     "license": "",
-    "depends": ['website', 'website_sale'],
+    "depends": ['website_sale'],
     'description': """
 
         Package of Runex Webshop modifications
@@ -24,6 +24,8 @@
     """,
     "demo": [],
     "data": [
+        'security/ir.model.access.csv',
+        'views/product_view.xml',
         'views/views.xml',
         'views/website_sale_template.xml'
     ],
