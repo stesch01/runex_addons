@@ -1,0 +1,14 @@
+﻿/*=============================================================
+                    Runex
+ ============================================================ */
+
+.ribbon-runex {
+    background-color: #a22a22;
+}
+
+[name="price"]>del.text-danger{
+    display: none;
+}
+.product_price .text-danger{
+    display: none;
+}
