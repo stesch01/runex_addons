@@ -114,18 +114,6 @@
             </field>
         </record>
 
-        <!--
-        <record id="product_public_category_form_view" model="ir.ui.view">
-            <field name="name">product.public.category.form.inherited.website_crm_campaign_runex</field>
-            <field name="model">product.public.category</field>
-            <field name="inherit_id" ref="website_sale.product_public_category_form_view" />
-            <field name="arch" type="xml">
-                <field name="name" position="after">
-                    <field name="mobile_icon" />
-                </field>
-            </field>
-        </record>
--->
 
         <!--<record id="product_public_category_form_view" model="ir.ui.view">-->
             <!--<field name="name">product.public.category.form.inherited.website_crm_campaign_runex</field>-->
@@ -455,11 +443,11 @@
             <!--</xpath>-->
         <!--</template>-->
 
-        <!--<template id="css_js" inherit_id="website.layout" name="Css Js">-->
-            <!--<xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">-->
-                <!--<link href="/website_crm_campaign_runex/static/src/css/sale_campaign.css" rel="stylesheet" type="text/css" />-->
-            <!--</xpath>-->
-        <!--</template>-->
+        <template id="css_js" inherit_id="website.layout" name="Css Js">
+            <xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">
+                <link href="/website_crm_campaign_runex/static/src/css/sale_campaign.css" rel="stylesheet" type="text/css" />
+            </xpath>
+        </template>
 
         <template id="assets_backend" inherit_id="web.assets_backend" name="Inherit Assets Backend">
             <xpath expr="." position="inside">
