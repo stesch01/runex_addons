@@ -13,7 +13,9 @@ $(document).ready(function () {
     $input_token.on('keydown', function(e){
         // if enter is pressed , submit
         if(e.keyCode == 13 || e.which == 13) { //if enter key is pressed
-            $input_token.closest('form').submit();
+            setTimeout(function(){
+                $input_token.closest('form').submit();
+            }, 0);
         }
     });
     // Fix force focus on input after delete tocken
