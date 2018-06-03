@@ -14,9 +14,9 @@ class Partner(models.Model):
 
         for partner in self:
             lang = request.context.get('lang')
-            pricelist = self.env['product.pricelist'].search(
-                    [('language_ids.code', '=', lang)]
-            )
+            pricelist = self.env['res.lang'].search(
+                    [('code', '=', lang)], limit=1
+            ).pricelist
             if not pricelist:
                 # Fallback if no pricelist found
                 company = self.env['website'].search([], limit=1).company_id
