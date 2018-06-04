@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="submenu_fix" inherit_id="website.submenu" name="Submenu_inherited">
+            <xpath expr="//li/a[@t-ignore='true']" position="replace">
+                <a t-att-href="(website.menu_id.child_id[0] == submenu) and '/' or submenu.url" t-ignore="true"
+                   t-att-target="'_blank' if submenu.new_window else None">
+                    <t t-if="submenu.name=='Webshop'">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
+                    </t>
+                    <t t-if="not submenu.name=='Webshop'">
+                        <span t-field="submenu.name"/>
+                    </t>
+                </a>
+            </xpath>
+        </template>
+
+        <template id="checkout_fix" inherit_id="website_sale.checkout" name="Checkout_inherited">
+            <xpath expr="//div[@class='col-md-8 oe_cart']/div[3]" position="replace">
+                <div class="clearfix">
+                    <a href="/shop/cart" class="btn btn-default btn-success mb32">
+                        <span class="fa fa-long-arrow-left"/>
+                        Return to Cart
+                    </a>
+                    <a class="btn btn-default btn-success pull-right mb32 a-submit">To checkout
+                        <span class="fa fa-long-arrow-right"/>
+                    </a>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="website_sale.continue_shopping" inherit_id="website_sale.cart" customize_show="True" name="Continue Shopping Button Inherited">
+            <xpath expr="//a[@href='/shop/checkout']" position="before">
+                <a href="/shop" class="btn btn-success mb32"><span class="fa fa-long-arrow-left"/> <span class="hidden-xs">Continue Shopping</span><span class="visible-xs-inline">Continue</span></a>
+            </xpath>
+        </template>
+
+        <template id="products_add_to_cart_inherit" inherit_id="website_sale.products_add_to_cart">
+            <xpath expr="//div[@class='product_price']/t[1]/a" position="attributes">
+                <attribute name="class">btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x</attribute>
+                <attribute name="style">padding: 1px 3px;​</attribute>
+            </xpath>
+            <xpath expr="//div[@class='product_price']/t[2]/a" position="attributes">
+                <attribute name="class">btn btn-success btn-s fa fa-shopping-cart fa-2x</attribute>
+                <attribute name="style">padding: 1px 3px;​</attribute>
+            </xpath>
+        </template>
+
+
+        <template id="products" inherit_id="website_sale.products">
+            <xpath expr="//div[@id='products_grid']//table" position="before">
+                <t t-foreach="products" t-as="product">
+                    <div t-if="view_type == 'list_view' and view_type != 'grid_view'" class="oe_product oe_list oe_product_cart" t-att-data-publish="product.website_published and 'on' or 'off'">
+                        <t t-call="website_sale.products_item"/>
+                    </div>
+                </t>
+            </xpath>
+            <xpath expr="//div[@id='products_grid']//table" position="attributes">
+                <attribute name="t-if">view_type == 'grid_view' and view_type != 'list_view'</attribute>
+            </xpath>
+            <xpath expr="//div[@id='products_grid']/*[1]" position="before">
+                <t t-if="not campaign">
+                    <div class="mb16 hidden-xs">
+                        <div style="display: inline">
+                            <form t-att-action="'%s/page/%s?search=%s' %(url, page, search)" method="post" class="form-inline">
+                                <span>Show </span>
+                                <input type="hidden" name="view_type" t-att-value="view_type"/>
+                                <input type="hidden" name="page" t-att-value="page"/>
+                                <input type="submit" name="limit" t-att-class="'btn btn-%s' %('primary' if limit == 52 else 'default')" value="52"/>
+                                <input type="submit" name="limit" t-att-class="'btn btn-%s' %('primary' if limit == 100 else 'default')" value="100"/>
+                                <input type="submit" name="limit" t-att-class="'btn btn-%s' %('primary' if limit == 200 else 'default')" value="200"/>
+                                <span> per page</span>
+                            </form>
+                        </div>
+                    </div>
+                </t>
+                <strong><p><t t-esc="product_count"/> Products</p></strong>
+            </xpath>
+        </template>
+
+        <template id="product" inherit_id="website_sale.product">
+            <xpath expr="//t[@t-call='website_sale.product_price']" position="after">
+                <p>SKU: <t t-esc="product.default_code" class="text-muted"/></p>
+            </xpath>
+            <xpath expr="//h1[@itemprop='name']" position="replace">
+                <h4 itemprop="name" style="color: #3E96CA;" t-field="product.name">Product Name
+                </h4>
+            </xpath>
+            <xpath expr="//ol[@class='breadcrumb']" position="replace">
+                <ol class="breadcrumb">
+                    <li><a t-att-href="keep(category=0)" onclick="history.go(-1); return false;">Products</a></li>
+                    <li t-if="category"><a t-att-href="keep('/shop/category/%s' % slug(category), category=0)" t-field="category.name"/></li>
+                    <li class="active hidden"><span t-field="product.name"/></li>
+                </ol>
+            </xpath>
+
+        </template>
+
+        <template id="products_item" inherit_id="website_sale.products_item">
+            <xpath expr="//img[@itemprop='image']" position="replace">
+                <img class="img img-responsive" t-att-src="'/imagefield/product.template/image/%s/ref/product_imagemagick.img_product_thumnail' %product.id" t-att-alt="product.name"/>
+            </xpath>
+            <xpath expr="//b" position="replace">
+                <b>
+                  <span t-field="product.price" style="white-space: nowrap;"  t-field-options='{
+                       "widget": "monetary",
+                       "display_currency": "user_id.partner_id.property_product_pricelist.currency_id"
+                   }'>
+                  </span>
+                  <span itemprop="price" style="display:none;" t-esc="product.price"/>
+                  <span itemprop="priceCurrency" style="display:none;" t-esc="user_id.partner_id.property_product_pricelist.currency_id.name" class='decimal_precision' t-att-data-precision="website.pricelist_id.currency_id.rounding"/>
+              </b>
+            </xpath>
+            <xpath expr="//div[@class='ribbon btn btn-danger']" position="attributes">
+                <attribute name="class">ribbon btn btn-danger ribbon-runex</attribute>
+            </xpath>
+        </template>
+
+        <template id="search" inherit_id="website_sale.search">
+            <xpath expr="//a[@class='btn btn-default a-submit']/.." position="after">
+                <span class="input-group-btn">
+                    <a href="/page/how-to-search" type="button" class="btn btn-default">
+                        <i class="fa fa-question "/>
+                    </a>
+                </span>
+            </xpath>
+            <xpath expr="//span[@class='input-group-btn']" position="after">
+                <span t-if="products" class="input-group-btn">
+                    <form t-att-action="'%s/page/%s?search=%s' %(url, page, search)" method="post">
+                        <input type="hidden" name="view_type" value="grid_view"/>
+                        <input type="hidden" name="limit" t-att-value="limit"/>
+                        <input type="hidden" name="page" t-att-value="page"/>
+                        <button type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'grid_view' else 'default')">
+                            <i class="fa fa-table"></i>
+                        </button>
+                    </form>
+                </span>
+                <span t-if="products" class="input-group-btn">
+                    <form t-att-action="'%s/page/%s?search=%s' %(url, page, search)" method="post">
+                        <input type="hidden" name="view_type" value="list_view"/>
+                        <input type="hidden" name="limit" t-att-value="limit"/>
+                        <input type="hidden" name="page" t-att-value="page"/>
+                        <button type="submit" t-att-class="'btn btn-%s hidden-xs' %('primary' if view_type == 'list_view' else 'default')">
+                            <i class="fa fa-list-alt"></i>
+                        </button>
+                    </form>
+                </span>
+            </xpath>
+            <xpath expr="//input[@name='search']" position="before">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary hidden-lg hidden-md hidden-sm" data-toggle="modal" data-target="#pc_modal">
+                        <i class="fa fa-bars"/>
+                    </button>
+                </span>
+            </xpath>
+            <xpath expr="//div[@class='input-group']" position="before">
+                <div class="modal fade" id="pc_modal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&amp;times;
+                                </button>
+                                <h4 class="modal-title">Public Category
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <t t-set="categs" t-value="request.env['product.public.category'].search([], order='sequence')"/>
+                                    <ul t-if="len(categs) &gt; 0" style="list-style-type:none">
+                                        <t t-foreach="categs" t-as="categ">
+                                            <li t-att-data-value="categ.id">
+                                                <a t-att-href="'/shop/category/%s' %categ.id">
+                                                    <h4 class="text-left" t-field="categ.name"/>
+                                                </a>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+
+        <template id="contact_form" inherit_id="website.contactus">
+            <xpath expr="//div[@class='container']" position="attributes">
+                <attribute name="class">container text-center</attribute>
+            </xpath>
+            <xpath expr="//div[@class='col-md-8']" position="attributes">
+                <attribute name="class">col-md-12</attribute>
+            </xpath>
+            <xpath expr="//div[@class='col-md-4 mb32']" position="attributes">
+                <attribute name="class">col-md-4 mb32 hidden</attribute>
+            </xpath>
+        </template>
+
+        <template id="css_js" inherit_id="website.layout" name="Css Js">
+            <xpath expr="//t[@t-call-assets='website.assets_frontend']" position="after">
+                <link href="/runex_webshop_2_0/static/src/css/website_sale.css" rel="stylesheet" type="text/css" />
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

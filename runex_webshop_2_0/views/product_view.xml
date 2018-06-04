@@ -1,0 +1,63 @@
+<openerp>
+    <data>
+
+        <record id="product_normal_form_view_inherited" model="ir.ui.view">
+            <field name="name">product.normal.form.view.inherited (product_tags)</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="public_categ_ids" position="after">
+                    <field name="tag_ids" widget="many2many_tags" placeholder="Tags..."/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_search_form_view_inherited" model="ir.ui.view">
+            <field name="name">product.search.form.view.inherited (product_tags)</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="tag_ids" string="Tags"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="product_tags_form_view" model="ir.ui.view">
+            <field name="name">product.tags.form</field>
+            <field name="model">product.tags</field>
+            <field name="arch" type="xml">
+                <form string="Product Tags">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="url"/>
+                        </group>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_tags_action" model="ir.actions.act_window">
+            <field name="name">Products tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.tags</field>
+            <field name="domain">[]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            action="product_tags_action"
+            id="product.menu_products_tags"
+            parent="base.menu_product"
+            sequence="31" groups="base.group_sale_manager"/>
+
+    </data>
+</openerp>
