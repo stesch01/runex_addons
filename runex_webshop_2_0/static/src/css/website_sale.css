@@ -9,6 +9,6 @@
 [name="price"]>del.text-danger{
     display: none;
 }
-.product_price .text-danger{
+.product_price .text-danger, .text-danger.oe_default_price{
     display: none;
 }

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, _
-from openerp.osv import fields as osv_fields
+from openerp.osv import fields
 from openerp.osv import osv
 from openerp.http import request
+from openerp.exceptions import Warning
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -62,7 +62,7 @@ class res_partner(osv.osv):
         return res
 
     _columns = {
-        'property_product_pricelist': osv_fields.function(
+        'property_product_pricelist': fields.function(
             _property_product_pricelist,
             type='many2one',
             relation='product.pricelist',
@@ -70,35 +70,3 @@ class res_partner(osv.osv):
             string="Sale Pricelist",
             help="This pricelist will be used, instead of the default one, for sales to the current partner"),
     }
-
-
-class Currency(models.Model):
-    _inherit = 'res.currency'
-
-    country_ids = fields.One2many(comodel_name='res.country', inverse_name='currency_id', string='Countries')
-
-
-class Lang(models.Model):
-    _inherit = 'res.lang'
-
-    pricelist = fields.Many2one(
-        comodel_name='product.pricelist',
-        domain=[('type', '=', 'sale')],
-        string='Price List'
-    )
-
-
-class Pricelist(models.Model):
-    _inherit = 'product.pricelist'
-
-    language_ids = fields.One2many(
-        comodel_name='res.lang',
-        inverse_name='pricelist',
-        string='Languages'
-    )
-
-
-class ProductCategory(models.Model):
-    _inherit = 'product.public.category'
-
-    description = fields.Text(string='Description')
