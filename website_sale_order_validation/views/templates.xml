@@ -43,7 +43,7 @@
             </xpath>
             <xpath expr="//ul[@class='wizard pull-right']" position="replace">
               <ul class="wizard pull-right">
-                  <li class="text-primary">Review Order<span class="chevron"></span></li>
+                  <li class="text-muted">Review Order<span class="chevron"></span></li>
                   <li class="text-muted">Shipping &amp; Billing<span class="chevron"></span></li>
                   <li class="text-primary">Confirmation<span class="chevron"></span></li>
                   <li style="border-right-width: 1px;border-radius: 0 6px 6px 0;"

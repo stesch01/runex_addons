@@ -86,18 +86,27 @@ class website_sales(website_sale):
         '/shop',
         '/shop/page/<int:page>',
         '/shop/category/<model("product.public.category"):category>',
-        '/shop/category/<model("product.public.category"):category>/page/<int:page>'
+        '/shop/category/<model("product.public.category"):category>/page/<int:page>',
+        '/shop/tag/<model("product.tags"):tag_id>',
+        '/shop/tag/<model("product.tags"):tag_id>/page/<int:page>'
     ], type='http', auth="public", website=True)
-    def shop(self, page=1, category=None, search='', **post):
+    def shop(self, page=1, tag_id=None, category=None, search='', **post):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-
+        if tag_id:
+            category = None
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
+        if not tag_id:
+            domain = self._get_search_domain(search, category, attrib_values)
+        else:
+            domain = self._get_search_domain_tags(search, tag_id, attrib_values)
 
-        domain = self._get_search_domain(search, category, attrib_values)
-
-        keep = QueryURL('/shop', category=category and int(category), search=search, attrib=attrib_list)
+        tag = tag_id and int(tag_id)
+        if tag:
+            keep = QueryURL('/shop/tag/%s/' % tag, search=search, attrib=attrib_list)
+        else:
+            keep = QueryURL('/shop', category=category and int(category), search=search, attrib=attrib_list)
 
         if not context.get('pricelist'):
             pricelist = self.get_pricelist()
@@ -111,9 +120,13 @@ class website_sales(website_sale):
         product_count = product_obj.search_count(cr, uid, domain, context=context)
         if search:
             post["search"] = search
+        if tag_id:
+            tag = pool['product.tags'].browse(cr, uid, int(tag_id), context=context)
+            url = "/shop/tag/%s" % slug(tag)
         if category:
             category = pool['product.public.category'].browse(cr, uid, int(category), context=context)
             url = "/shop/category/%s" % slug(category)
+
         if attrib_list:
             post['attrib'] = attrib_list
 
@@ -277,94 +290,3 @@ class website_sales(website_sale):
                 domain += [('attribute_line_ids.value_ids', 'in', ids)]
         return domain
 
-    @http.route([
-        '/shop/tag/<model("product.tags"):tag_id>',
-        '/shop/tag/<model("product.tags"):tag_id>/page/<int:page>'
-    ], type='http', auth="public", website=True)
-    def shop_tag(self, page=1, tag_id=None, search='', **post):
-        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-
-        attrib_list = request.httprequest.args.getlist('attrib')
-        attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
-        attrib_set = set([v[1] for v in attrib_values])
-
-        domain = self._get_search_domain_tags(search, tag_id, attrib_values)
-        tag = tag_id and int(tag_id)
-        if tag:
-            keep = QueryURL('/shop/tag/%s/' % tag, search=search, attrib=attrib_list)
-        else:
-            return request.redirect("/shop")
-        if not context.get('pricelist'):
-            pricelist = self.get_pricelist()
-            context['pricelist'] = int(pricelist)
-        else:
-            pricelist = pool.get('product.pricelist').browse(cr, uid, context['pricelist'], context)
-
-        product_obj = pool.get('product.template')
-
-        url = "/shop"
-        product_count = product_obj.search_count(cr, uid, domain, context=context)
-        if search:
-            post["search"] = search
-        if tag_id:
-            tag = pool['product.tags'].browse(cr, uid, int(tag_id), context=context)
-            url = "/shop/tag/%s" % slug(tag)
-        if attrib_list:
-            post['attrib'] = attrib_list
-
-        ppg = PPG
-        if post.get('limit'):
-            limit = post.get('limit')
-            try:
-                int(limit)
-                ppg = abs(int(limit))
-            except:
-                pass
-        pager = request.website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
-        post['order'] = post.get('order', 'name')
-        product_ids = product_obj.search(cr, uid, domain, limit=ppg, offset=pager['offset'], order=self._get_search_order(post), context=context)
-        products = product_obj.browse(cr, uid, product_ids, context=context)
-
-        style_obj = pool['product.style']
-        style_ids = style_obj.search(cr, uid, [], context=context)
-        styles = style_obj.browse(cr, uid, style_ids, context=context)
-
-        categ_obj = pool['product.public.category']
-        categ_ids = categ_obj.search(cr, uid, [('parent_id', '=', False)], context=context)
-        categs = categ_obj.browse(cr, uid, categ_ids, context=context)
-
-        attributes_obj = request.registry['product.attribute']
-        attributes_ids = attributes_obj.search(cr, uid, [], context=context)
-        attributes = attributes_obj.browse(cr, uid, attributes_ids, context=context)
-
-        from_currency = pool.get('product.price.type')._get_field_currency(cr, uid, 'list_price', context)
-        to_currency = pricelist.currency_id
-        compute_currency = lambda price: pool['res.currency']._compute(cr, uid, from_currency, to_currency, price, context=context)
-        view_type = 'grid_view'
-        if post.get('view_type') and post.get('view_type') == 'list_view':
-            view_type = 'list_view'
-
-        values = {
-            'search': search,
-            'category': None,
-            'attrib_values': attrib_values,
-            'attrib_set': attrib_set,
-            'page': page,
-            'pager': pager,
-            'pricelist': pricelist,
-            'products': products,
-            'bins': table_compute().process(products, ppg),
-            'rows': PPR,
-            'styles': styles,
-            'categories': categs,
-            'attributes': attributes,
-            'compute_currency': compute_currency,
-            'keep': keep,
-            'style_in_product': lambda style, product: style.id in [s.id for s in product.website_style_ids],
-            'attrib_encode': lambda attribs: werkzeug.url_encode([('attrib',i) for i in attribs]),
-            'product_count': product_count,
-            'view_type': view_type,
-            'limit': ppg,
-            'url': url,
-        }
-        return request.website.render("website_sale.products", values)

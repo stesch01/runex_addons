@@ -36,3 +36,8 @@ class ProductTag(models.Model):
         string='Products'
     )
 
+
+class ProductCategory(models.Model):
+    _inherit = 'product.public.category'
+
+    description = fields.Text(string='Description')

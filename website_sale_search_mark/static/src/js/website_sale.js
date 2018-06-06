@@ -18,6 +18,15 @@ $(document).ready(function () {
             }, 0);
         }
     });
+    var $submitBtn = $input_token.closest('form').find('a.a-submit');
+    $submitBtn.off('click');
+    $submitBtn.on('click', function(e){
+        e.preventDefault();
+        $tokenfield.createTokensFromInput(e, $input_token.data('edit'));
+        setTimeout(function(){
+            $input_token.closest('form').submit();
+        }, 0);
+    });
     // Fix force focus on input after delete tocken
     $input_token.on('keyup', function(e){
         if(e.keyCode == 8 || e.which == 8) {

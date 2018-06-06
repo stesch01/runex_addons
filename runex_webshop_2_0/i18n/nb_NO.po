@@ -1,0 +1,213 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* runex_webshop_2_0
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20171009\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-05 16:51+0000\n"
+"PO-Revision-Date: 2018-06-05 16:51+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.search
+msgid "&times;"
+msgstr "&times;"
+
+#. module: runex_webshop_2_0
+#: field:res.currency,country_ids:0
+msgid "Countries"
+msgstr "Countries"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_res_currency
+msgid "Currency"
+msgstr "Valuta."
+
+#. module: runex_webshop_2_0
+#: field:product.tags,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_res_lang
+#: field:product.pricelist,language_ids:0
+msgid "Languages"
+msgstr "Språk"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,name:0
+msgid "Name"
+msgstr "Name"
+
+#. module: runex_webshop_2_0
+#: code:addons/runex_webshop_2_0/models/models.py:47
+#: code:addons/runex_webshop_2_0/models/partners.py:47
+#, python-format
+msgid "No pricelist found for your language! Please contact the administrator."
+msgstr "No pricelist found for your language! Please contact the administrator."
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: runex_webshop_2_0
+#: field:res.lang,pricelist:0
+msgid "Price List"
+msgstr "Price List"
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_product_pricelist
+msgid "Pricelist"
+msgstr "Prisliste"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.product
+msgid "Product Name"
+msgstr "Produktnavn"
+
+#. module: runex_webshop_2_0
+#: view:product.tags:runex_webshop_2_0.product_tags_form_view
+msgid "Product Tags"
+msgstr "Product Tags"
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_product_template
+msgid "Product Template"
+msgstr "Produktmal"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,product_ids:0
+#: view:website:website_sale.product
+#: view:website:website_sale.products
+msgid "Products"
+msgstr "Produkter"
+
+#. module: runex_webshop_2_0
+#: model:ir.actions.act_window,name:runex_webshop_2_0.product_tags_action
+msgid "Products tags"
+msgstr "Products tags"
+
+#. module: runex_webshop_2_0
+#: model:ir.model,name:runex_webshop_2_0.model_product_public_category
+#: view:website:website_sale.search
+msgid "Public Category"
+msgstr "Offentlig kategori"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.checkout
+msgid "Return to Cart"
+msgstr "Tilbake til handlekurv"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.product
+msgid "SKU:"
+msgstr "SKU:"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products
+msgid "Show"
+msgstr "Vis&nbsp;&nbsp;"
+
+#. module: runex_webshop_2_0
+#: view:product.product:runex_webshop_2_0.product_search_form_view_inherited
+msgid "Tags"
+msgstr "Tags"
+
+#. module: runex_webshop_2_0
+#: view:product.template:runex_webshop_2_0.product_normal_form_view_inherited
+msgid "Tags..."
+msgstr "Tags..."
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.checkout
+msgid "To checkout"
+msgstr "To checkout"
+
+#. module: runex_webshop_2_0
+#: field:product.tags,url:0
+msgid "Website Url"
+msgstr "Website Url"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products_item
+msgid "btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x"
+msgstr "btn btn-success btn-s fa fa-shopping-cart a-submit fa-2x"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products_item
+msgid "btn btn-success btn-s fa fa-shopping-cart fa-2x"
+msgstr "btn btn-success btn-s fa fa-shopping-cart fa-2x"
+
+#. module: runex_webshop_2_0
+#: view:website:website.contactus
+msgid "col-md-12"
+msgstr "col-md-12"
+
+#. module: runex_webshop_2_0
+#: view:website:website.contactus
+msgid "col-md-4 mb32 hidden"
+msgstr "col-md-4 mb32 hidden"
+
+#. module: runex_webshop_2_0
+#: view:website:website.contactus
+msgid "container text-center"
+msgstr "container text-center"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products_item
+msgid "padding: 1px 3px;​"
+msgstr "padding: 1px 3px;​"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products
+msgid "per page"
+msgstr "per side"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products_item
+msgid "ribbon btn btn-danger ribbon-runex"
+msgstr "ribbon btn btn-danger ribbon-runex"
+
+#. module: runex_webshop_2_0
+#: view:website:website_sale.products
+msgid "view_type == 'grid_view' and view_type != 'list_view'"
+msgstr "view_type == 'grid_view' and view_type != 'list_view'"
+

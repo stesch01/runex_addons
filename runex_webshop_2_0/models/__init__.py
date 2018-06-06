@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
-import models
+import pricelist
 import product
+import partners
