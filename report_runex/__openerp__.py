@@ -27,14 +27,14 @@
     'description': """""",
     'author': 'Vertel AB',
     'website': 'http://www.vertel.se',
-    'depends': ['report_intrastat', 'sale', 'stock'],
+    'depends': ['report_intrastat', 'sale', 'stock', 'delivery'],
     'data': [
              "report_view.xml",
              "report_data.xml",
              ],
     "license" : "AGPL-3",
     'installable': True,
-    'active': False,
+    'active': True,
     'application': False,
     'auto_install': False,
 }
