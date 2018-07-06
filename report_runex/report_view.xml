@@ -89,6 +89,13 @@
                 </div>
             </xpath>
         </template>
+
+        <!-- Remove Fax from Invoice Contact information -->
+        <template inherit_id="delivery.report_shipping2" id="report_shipping_picking">
+            <div t-field="o.sale_id.partner_invoice_id" position="attributes">
+                <attribute name="t-field-options">{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": true}</attribute>
+            </div>
+        </template>
         
         <template id="report_invoice_document" inherit_id="account.report_invoice_document">
             <xpath expr="//div[@class='row']" position="replace">
