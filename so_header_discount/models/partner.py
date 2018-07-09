@@ -26,7 +26,7 @@ class ResPartner(models.Model):
         if not vals: vals = {}
         if 'is_company' in vals:
             if vals['is_company'] is False:
-                if vals['parent_id']:
+                if 'parent_id' in vals and vals['parent_id']:
                     company_discount = self.browse([vals['parent_id']]).so_discount
                     vals['so_discount'] = company_discount
         return super(ResPartner, self).create(vals)
