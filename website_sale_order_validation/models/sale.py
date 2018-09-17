@@ -15,8 +15,8 @@ class SaleOrder(models.Model):
     # Fix the order of states (new stat is added last in view)
     # We want it to be added in the second order.
     @api.model
-    def fields_get(self, fields=None, attributes=None):
-        fields = super(SaleOrder, self).fields_get(fields, attributes=attributes)
+    def fields_get(self, allfields=None, context=None, write_access=True, attributes=None):
+        fields = super(SaleOrder, self).fields_get(allfields=allfields, context=context, write_access=write_access, attributes=attributes)
         try:
             if 'state' in fields and 'selection' in fields['state']:
                 states = fields['state']['selection']
