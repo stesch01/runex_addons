@@ -42,6 +42,14 @@ class PurchaseOrder(osv.osv):
         'picking_ids': fields.function(_get_picking_ids, method=True, type='one2many', relation='stock.picking', string='Picking List', help="This is the list of receipts that have been generated for this purchase order."),
     }
 
+    def cron_compute_po_status(self, cr, uid, ids=None):
+        """Function which checks all Approved Purchase orders and checks if PO status can be marked as Done
+        """ 
+        orders = self.pool.get('purchase.order').search(cr, uid, [('state','=','approved')])
+        for order in self.pool.get('purchase.order').browse(cr, uid, orders):
+            self.compute_po_status(cr, uid, [order.id])
+        return True
+
     def compute_po_status(self, cr, uid, ids, context=None):
         """This function updates PO status as Done if 
         - related shipment is received AND
@@ -72,8 +80,12 @@ class PurchaseOrder(osv.osv):
             # compare po products & received products:
             flag = False
             for prod in po_products_data:
-                if picking_products_data[prod] >= po_products_data[prod]:
-                    flag = True
+                if prod in picking_products_data.keys():
+                    if picking_products_data[prod] >= po_products_data[prod]:
+                        flag = True
+                    else:
+                        flag = False
+                        break
                 else:
                     flag = False
                     break

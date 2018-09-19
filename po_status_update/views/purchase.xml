@@ -1,0 +1,7 @@
+<openerp>
+	<data noupdate="1">
+
+		<function name="cron_compute_po_status" model="purchase.order"/>
+
+	</data>
+</openerp>
