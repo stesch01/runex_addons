@@ -25,7 +25,6 @@
 
     'depends': ['purchase'],
     'data': [
-    	'views/purchase_view.xml',
     ],
 
     'application': False,
